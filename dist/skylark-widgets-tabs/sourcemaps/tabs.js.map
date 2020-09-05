@@ -1,0 +1,1 @@
+{"version":3,"sources":["tabs.js"],"names":["define","skylark","attach","splittable"],"mappings":";;;;;;;AAAAA,QACC,yBACC,SAASC,GACV,OAAOA,EAAQC,OAAO,gBACrBC","file":"../tabs.js","sourcesContent":["define([\r\n\t\"skylark-langx/skylark\"\r\n],function(skylark){\r\n\treturn skylark.attach(\"widgets.tabs\",{\r\n\t\tsplittable : {\r\n\t\t\t\r\n\t\t}\r\n\t});\r\n});"]}

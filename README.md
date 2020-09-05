@@ -1,2 +1,2 @@
-# skylark-widgets-general
-The skylark general widgets library.
+# skylark-widgets-containers
+The skylark container widgets library.
