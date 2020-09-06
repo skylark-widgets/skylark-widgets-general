@@ -13,6 +13,7 @@ define([
 	DragBuffer,
 	Widget,
 	Panel,
+	tabs,
 	TabElement,
 	TabButton
 ){
@@ -173,8 +174,8 @@ define([
 			
 			// Attach to this group
 			tab.container = this;
-			tab.button.attachTo(this.buttons);
-			tab.attachTo(this.tab);
+			tab.button.setParent(this.buttons);
+			tab.setParent(this.tab);
 			
 			// Add to items
 			if(insertIndex !== undefined){

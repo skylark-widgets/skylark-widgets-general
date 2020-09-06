@@ -1,7 +1,8 @@
 define([
 	"skylark-widgets-base/panels/DualContainer",
+	"../tabs",
 	"../TabGroup"
-],function(DualContainer,TabGroup){
+],function(DualContainer,tabs,TabGroup){
 	"use strict";
 
 	/**

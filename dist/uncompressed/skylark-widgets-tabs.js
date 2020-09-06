@@ -714,6 +714,7 @@ define('skylark-widgets-tabs/TabGroup',[
 	DragBuffer,
 	Widget,
 	Panel,
+	tabs,
 	TabElement,
 	TabButton
 ){
@@ -874,8 +875,8 @@ define('skylark-widgets-tabs/TabGroup',[
 			
 			// Attach to this group
 			tab.container = this;
-			tab.button.attachTo(this.buttons);
-			tab.attachTo(this.tab);
+			tab.button.setParent(this.buttons);
+			tab.setParent(this.tab);
 			
 			// Add to items
 			if(insertIndex !== undefined){
@@ -1672,7 +1673,7 @@ define('skylark-widgets-tabs/splittable/TabContainer',[
 		attach : function(element)
 		{
 			this.group = element;
-			this.group.attachTo(this);
+			this.group.setParent(this);
 		},
 
 		updateSize : function()
@@ -1838,8 +1839,9 @@ define('skylark-widgets-tabs/splittable/TabContainer',[
 });
 define('skylark-widgets-tabs/splittable/TabDualContainer',[
 	"skylark-widgets-base/panels/DualContainer",
+	"../tabs",
 	"../TabGroup"
-],function(DualContainer,TabGroup){
+],function(DualContainer,tabs,TabGroup){
 	"use strict";
 
 	/**
@@ -2070,6 +2072,7 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 	"skylark-widgets-base/dnd/DragBuffer",
 
 	"skylark-widgets-base/panels/DualContainer",
+	"../tabs",
 	"../TabGroup",
 	"../TabElement",
 	"./TabContainer",
@@ -2079,6 +2082,7 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 	geom, 
 	DragBuffer,
 	DualContainer, 
+	tabs,
 	TabGroup,
 	TabElement,
 	TabContainer, 
@@ -2097,8 +2101,8 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 	 * @param {Element} parent Parent element.
 	 */
 
-	var TabButtonSplit = TabGroup.inherit({
-		"klassName" : "TabButtonSplit",
+	var TabGroupSplit = TabGroup.inherit({
+		"klassName" : "TabGroupSplit",
 
 		"_construct" : function (parent, placement)
 		{
@@ -2193,6 +2197,7 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 			//Drag over
 			this.tab.element.ondragover = function(event)
 			{
+				return;
 				event.preventDefault();
 
 				if(!(DragBuffer.buffer[0] instanceof TabElement))
@@ -2420,7 +2425,7 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 			var container = tab.container;
 			var tab = TabGroup.prototype.attachTab.call(this, tab, insertIndex);
 
-			if(container.options.length === 0)
+			if(container.items.length === 0)
 			{
 				container.collapse();
 			}
@@ -2432,7 +2437,7 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 		{
 			TabGroup.prototype.removeTab.call(this, index, dontDestroy);
 
-			if(this.options.length === 0 && dontDestroy !== true)
+			if(this.items.length === 0 && dontDestroy !== true)
 			{
 				this.collapse();
 			}
@@ -2440,13 +2445,13 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 
 		addTab : function(TabConstructor, closeable)
 		{
-			var tab = new TabConstructor(this.tab, closeable, this, this.options.length);
+			var tab = new TabConstructor(this.tab, closeable, this, this.items.length);
 			tab.button = new TabButtonSplit(this.buttons, tab);
 			tab.updateInterface();
 
-			this.options.push(tab);
+			this.items.push(tab);
 
-			if(this.selected === null || this.options.length === 1)
+			if(this.selected === null || this.items.length === 1)
 			{
 				this.selectTab(tab);
 			}

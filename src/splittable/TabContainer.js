@@ -42,7 +42,7 @@ define([
 		attach : function(element)
 		{
 			this.group = element;
-			this.group.attachTo(this);
+			this.group.setParent(this);
 		},
 
 		updateSize : function()

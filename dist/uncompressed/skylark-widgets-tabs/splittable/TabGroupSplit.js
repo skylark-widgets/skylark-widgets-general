@@ -3,6 +3,7 @@ define([
 	"skylark-widgets-base/dnd/DragBuffer",
 
 	"skylark-widgets-base/panels/DualContainer",
+	"../tabs",
 	"../TabGroup",
 	"../TabElement",
 	"./TabContainer",
@@ -12,6 +13,7 @@ define([
 	geom, 
 	DragBuffer,
 	DualContainer, 
+	tabs,
 	TabGroup,
 	TabElement,
 	TabContainer, 
@@ -30,8 +32,8 @@ define([
 	 * @param {Element} parent Parent element.
 	 */
 
-	var TabButtonSplit = TabGroup.inherit({
-		"klassName" : "TabButtonSplit",
+	var TabGroupSplit = TabGroup.inherit({
+		"klassName" : "TabGroupSplit",
 
 		"_construct" : function (parent, placement)
 		{
@@ -126,6 +128,7 @@ define([
 			//Drag over
 			this.tab.element.ondragover = function(event)
 			{
+				return;
 				event.preventDefault();
 
 				if(!(DragBuffer.buffer[0] instanceof TabElement))
@@ -353,7 +356,7 @@ define([
 			var container = tab.container;
 			var tab = TabGroup.prototype.attachTab.call(this, tab, insertIndex);
 
-			if(container.options.length === 0)
+			if(container.items.length === 0)
 			{
 				container.collapse();
 			}
@@ -365,7 +368,7 @@ define([
 		{
 			TabGroup.prototype.removeTab.call(this, index, dontDestroy);
 
-			if(this.options.length === 0 && dontDestroy !== true)
+			if(this.items.length === 0 && dontDestroy !== true)
 			{
 				this.collapse();
 			}
@@ -373,13 +376,13 @@ define([
 
 		addTab : function(TabConstructor, closeable)
 		{
-			var tab = new TabConstructor(this.tab, closeable, this, this.options.length);
+			var tab = new TabConstructor(this.tab, closeable, this, this.items.length);
 			tab.button = new TabButtonSplit(this.buttons, tab);
 			tab.updateInterface();
 
-			this.options.push(tab);
+			this.items.push(tab);
 
-			if(this.selected === null || this.options.length === 1)
+			if(this.selected === null || this.items.length === 1)
 			{
 				this.selectTab(tab);
 			}
