@@ -415,11 +415,11 @@ define('skylark-widgets-tabs/TabButton',[
 });
 define('skylark-widgets-tabs/TabElement',[
 	"skylark-langx-strings",
-	"skylark-widgets-base/Widget",
+	"skylark-widgets-base/panels/Panel",
 	"./tabs"
 ],function(
 	strings,
-	Widget,
+	Panel,
 	tabs
 ){
 	"use strict";
@@ -430,7 +430,7 @@ define('skylark-widgets-tabs/TabElement',[
 	 * These are used to implement the main components of the interface (editors, menus, etc).
 	 *
 	 * @class TabElement
-	 * @extends {Widget}
+	 * @extends {Panel}
 	 * @param {Widget} parent Parent element.
 	 * @param {Boolean} closeable If false the tab cannot be closed.
 	 * @param {TabContainer} container Container for this tab.
@@ -439,11 +439,11 @@ define('skylark-widgets-tabs/TabElement',[
 	 * @param {String} icon Icon of the tab.
 	 */
 
-	var TabElement = Widget.inherit({
+	var TabElement = Panel.inherit({
 		"klassName" : "TabElement",
 
 		"_construct" : function (parent, closeable, container, index, title, icon){
-			Widget.prototype._construct.call(this, parent, "div");
+			Panel.prototype._construct.call(this, parent);
 
 			var self = this;
 
@@ -687,7 +687,7 @@ define('skylark-widgets-tabs/TabElement',[
 		},
 
 		destroy : function(){
-			Widget.prototype.destroy.call(this);
+			Panel.prototype.destroy.call(this);
 			
 			if(this.button !== null){
 				this.button.destroy();
@@ -730,12 +730,12 @@ define('skylark-widgets-tabs/TabGroup',[
 	 * @param {Widget} parent Parent element.
 	 */
 
-	 var TabGroup = Widget.inherit({
+	 var TabGroup = Panel.inherit({
 	 	"klassName" : "TabGroup",
 
 		"_construct" : function (parent, placement)
 		{
-			Widget.prototype._construct.call(this, parent, "div");
+			Panel.prototype._construct.call(this, parent);
 
 			var self = this;
 
@@ -1178,7 +1178,7 @@ define('skylark-widgets-tabs/TabGroup',[
 		},
 
 		updateSize : function(){
-			Widget.prototype.updateSize.call(this);
+			Panel.prototype.updateSize.call(this);
 
 			var tabSize = this.size.clone();
 			var buttonSize = this.buttonSize.clone();
@@ -1630,11 +1630,11 @@ define('skylark-widgets-tabs/splittable/TabButtonSplit',[
 });
 
 define('skylark-widgets-tabs/splittable/TabContainer',[
-	"skylark-widgets-base/Widget",
+	"skylark-widgets-base/panels/Panel",
 	"../tabs",
 	"../TabGroup"
 ],function(
-	Widget,
+	Panel,
 	tabs,
 	TabGroup
 ){
@@ -1646,13 +1646,13 @@ define('skylark-widgets-tabs/splittable/TabContainer',[
 	 * The container keeps track of all groups that may be splited into multiple groups.
 	 *
 	 * @class TabContainer
-	 * @extends {Widget}
+	 * @extends {Panel}
 	 */
-	var TabContainer = Widget.inherit({
+	var TabContainer = Panel.inherit({
 		"klassName" : "TabContainer",
 
 		"_construct" :  function(parent){
-			Widget.prototype._construct.call(this, parent, "div");
+			Panel.prototype._construct.call(this, parent);
 			
 			this.group = null;
 		},
@@ -1678,7 +1678,7 @@ define('skylark-widgets-tabs/splittable/TabContainer',[
 
 		updateSize : function()
 		{
-			Widget.prototype.updateSize.call(this);
+			Panel.prototype.updateSize.call(this);
 
 			if(this.group !== null)
 			{

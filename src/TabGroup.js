@@ -29,12 +29,12 @@ define([
 	 * @param {Widget} parent Parent element.
 	 */
 
-	 var TabGroup = Widget.inherit({
+	 var TabGroup = Panel.inherit({
 	 	"klassName" : "TabGroup",
 
 		"_construct" : function (parent, placement)
 		{
-			Widget.prototype._construct.call(this, parent, "div");
+			Panel.prototype._construct.call(this, parent);
 
 			var self = this;
 
@@ -477,7 +477,7 @@ define([
 		},
 
 		updateSize : function(){
-			Widget.prototype.updateSize.call(this);
+			Panel.prototype.updateSize.call(this);
 
 			var tabSize = this.size.clone();
 			var buttonSize = this.buttonSize.clone();

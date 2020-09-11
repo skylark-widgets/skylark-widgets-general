@@ -1,9 +1,9 @@
 define([
-	"skylark-widgets-base/Widget",
+	"skylark-widgets-base/panels/Panel",
 	"../tabs",
 	"../TabGroup"
 ],function(
-	Widget,
+	Panel,
 	tabs,
 	TabGroup
 ){
@@ -15,13 +15,13 @@ define([
 	 * The container keeps track of all groups that may be splited into multiple groups.
 	 *
 	 * @class TabContainer
-	 * @extends {Widget}
+	 * @extends {Panel}
 	 */
-	var TabContainer = Widget.inherit({
+	var TabContainer = Panel.inherit({
 		"klassName" : "TabContainer",
 
 		"_construct" :  function(parent){
-			Widget.prototype._construct.call(this, parent, "div");
+			Panel.prototype._construct.call(this, parent);
 			
 			this.group = null;
 		},
@@ -47,7 +47,7 @@ define([
 
 		updateSize : function()
 		{
-			Widget.prototype.updateSize.call(this);
+			Panel.prototype.updateSize.call(this);
 
 			if(this.group !== null)
 			{

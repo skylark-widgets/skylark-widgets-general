@@ -1,10 +1,10 @@
 define([
 	"skylark-langx-strings",
-	"skylark-widgets-base/Widget",
+	"skylark-widgets-base/panels/Panel",
 	"./tabs"
 ],function(
 	strings,
-	Widget,
+	Panel,
 	tabs
 ){
 	"use strict";
@@ -15,7 +15,7 @@ define([
 	 * These are used to implement the main components of the interface (editors, menus, etc).
 	 *
 	 * @class TabElement
-	 * @extends {Widget}
+	 * @extends {Panel}
 	 * @param {Widget} parent Parent element.
 	 * @param {Boolean} closeable If false the tab cannot be closed.
 	 * @param {TabContainer} container Container for this tab.
@@ -24,11 +24,11 @@ define([
 	 * @param {String} icon Icon of the tab.
 	 */
 
-	var TabElement = Widget.inherit({
+	var TabElement = Panel.inherit({
 		"klassName" : "TabElement",
 
 		"_construct" : function (parent, closeable, container, index, title, icon){
-			Widget.prototype._construct.call(this, parent, "div");
+			Panel.prototype._construct.call(this, parent);
 
 			var self = this;
 
@@ -272,7 +272,7 @@ define([
 		},
 
 		destroy : function(){
-			Widget.prototype.destroy.call(this);
+			Panel.prototype.destroy.call(this);
 			
 			if(this.button !== null){
 				this.button.destroy();
