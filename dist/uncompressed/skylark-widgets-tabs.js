@@ -2197,7 +2197,6 @@ define('skylark-widgets-tabs/splittable/TabGroupSplit',[
 			//Drag over
 			this.tab.element.ondragover = function(event)
 			{
-				return;
 				event.preventDefault();
 
 				if(!(DragBuffer.buffer[0] instanceof TabElement))
