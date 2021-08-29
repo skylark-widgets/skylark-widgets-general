@@ -1,12 +1,12 @@
 define([
 	"./tabs",
-	"./TabButton",
-	"./TabElement",
-	"./TabGroup",
-	"./splittable/TabButtonSplit",
-	"./splittable/TabContainer",
-	"./splittable/TabDualContainer",
-	"./splittable/TabGroupSplit"
+	"./tab-button",
+	"./tab-element",
+	"./tab-group",
+	"./splittable/tab-button-split",
+	"./splittable/tab-container",
+	"./splittable/tab-dual-container",
+	"./splittable/tab-group-split"
 
 ],function(tabs){
 	return tabs;

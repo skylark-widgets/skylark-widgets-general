@@ -1,12 +1,12 @@
 define([
 	"skylark-langx-numerics/Vector2",
-	"skylark-widgets-base/dnd/DragBuffer",
+	"skylark-widgets-base/dnd/drag-buffer",
 
-	"skylark-widgets-base/Widget",
-	"skylark-widgets-base/panels/Panel",
+	"skylark-widgets-base/widget",
+	"skylark-widgets-base/panels/panel",
 	"./tabs",
-	"./TabElement",
-	"./TabButton"
+	"./tab-element",
+	"./tab-button"
 
 ],function(
 	Vector2,

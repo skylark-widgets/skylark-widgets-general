@@ -1,7 +1,7 @@
 define([
-	"skylark-widgets-base/panels/Panel",
+	"skylark-widgets-base/panels/panel",
 	"../tabs",
-	"../TabGroup"
+	"../tab-group"
 ],function(
 	Panel,
 	tabs,

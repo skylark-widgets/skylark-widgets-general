@@ -1,11 +1,11 @@
 define([
 	"skylark-devices-points/mouse",
-	"skylark-widgets-base/dnd/DragBuffer",
+	"skylark-widgets-base/dnd/drag-buffer",
 
-	"skylark-widgets-base/Widget",
+	"skylark-widgets-base/widget",
 	"../tabs",
-	"../TabElement",
-	"../TabGroup"
+	"../tab-element",
+	"../tab-group"
 ],function(
 	mouse,
 

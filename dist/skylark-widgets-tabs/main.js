@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-widgets/skylark-widgets-tabs/
  * @license MIT
  */
-define(["./tabs","./TabButton","./TabElement","./TabGroup","./splittable/TabButtonSplit","./splittable/TabContainer","./splittable/TabDualContainer","./splittable/TabGroupSplit"],function(t){return t});
+define(["./tabs","./tab-button","./tab-element","./tab-group","./splittable/tab-button-split","./splittable/tab-container","./splittable/tab-dual-container","./splittable/tab-group-split"],function(t){return t});
 //# sourceMappingURL=sourcemaps/main.js.map

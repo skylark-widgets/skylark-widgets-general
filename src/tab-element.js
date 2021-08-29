@@ -1,6 +1,6 @@
 define([
 	"skylark-langx-strings",
-	"skylark-widgets-base/panels/Panel",
+	"skylark-widgets-base/panels/panel",
 	"./tabs"
 ],function(
 	strings,

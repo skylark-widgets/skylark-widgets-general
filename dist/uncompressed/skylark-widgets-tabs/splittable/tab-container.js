@@ -1,23 +1,61 @@
 define([
-	"skylark-widgets-base/panels/DualContainer",
+	"skylark-widgets-base/panels/panel",
 	"../tabs",
-	"../TabGroup"
-],function(DualContainer,tabs,TabGroup){
+	"../tab-group"
+],function(
+	Panel,
+	tabs,
+	TabGroup
+){
 	"use strict";
 
 	/**
-	 * Tab dual container is a dual container with tabgroups.
+	 * Tab container is the root for a tree of tab groups.
 	 *
-	 * @class TabDualContainer
-	 * @extends {Element, TabDual}
+	 * The container keeps track of all groups that may be splited into multiple groups.
+	 *
+	 * @class TabContainer
+	 * @extends {Panel}
 	 */
-	 var TabDualContainer = DualContainer.inherit({
-		"_construct" : function(parent)	{
-			DualContainer.prototype._construct.call(this, parent);
+	var TabContainer = Panel.inherit({
+		"klassName" : "TabContainer",
 
-			this._elm.style.overflow = "visible";
+		"_construct" :  function(parent){
+			Panel.prototype._construct.call(this, parent);
+			
+			this.group = null;
 		},
 
+
+		/**
+		 * Split this tab group into two new tab groups.
+		 *
+		 * @method split
+		 * @param {Number} direction Direction where to insert the new tab.
+		 * @return {TabGroupSplit} The new created tab group.
+		 */
+		split : function(direction)
+		{
+			return this.group.split(direction);
+		},
+
+		attach : function(element)
+		{
+			this.group = element;
+			this.group.setParent(this);
+		},
+
+		updateSize : function()
+		{
+			Panel.prototype.updateSize.call(this);
+
+			if(this.group !== null)
+			{
+				this.group.position.set(0, 0);
+				this.group.size.copy(this.size);
+				this.group.updateInterface();
+			}
+		},
 
 		/**
 		 * Update all tabs object data.
@@ -26,8 +64,7 @@ define([
 		 */
 		updateMetadata : function()
 		{
-			this._elmA.updateMetadata();
-			this._elmB.updateMetadata();
+			this.group.updateMetadata();
 		},
 
 		/**
@@ -37,8 +74,7 @@ define([
 		 */
 		updateObjectsView : function()
 		{
-			this._elmA.updateObjectsView();
-			this._elmB.updateObjectsView();
+			this.group.updateObjectsView();
 		},
 
 		/**
@@ -50,8 +86,7 @@ define([
 		 */
 		updateSelection : function()
 		{
-			this._elmA.updateSelection();
-			this._elmB.updateSelection();
+			this.group.updateSelection();
 		},
 
 		/**
@@ -63,8 +98,7 @@ define([
 		 */
 		updateSettings : function()
 		{
-			this._elmA.updateSettings();
-			this._elmB.updateSettings();
+			this.group.updateSettings();
 		},
 
 		/**
@@ -77,9 +111,9 @@ define([
 		{
 			var active = [];
 
-			if(this._elmA instanceof TabGroup)
+			if(this.group instanceof TabGroup)
 			{
-				var tab = this._elmA.getActiveTab();
+				var tab = this.group.getActiveTab();
 				if(tab !== null)
 				{
 					active.push(tab);
@@ -87,24 +121,10 @@ define([
 			}
 			else
 			{
-				active = active.concat(this._elmA.getActiveTab());
+				active = active.concat(this.group.getActiveTab());
 			}
 
-			if(this._elmB instanceof TabGroup)
-			{
-				var tab = this._elmB.getActiveTab();
-				if(tab !== null)
-				{
-					active.push(tab);
-				}
-				this._elmA.getActiveTab();
-			}
-			else
-			{
-				active = active.concat(this._elmB.getActiveTab());
-			}
-
-			return active;
+			return this.group.getActiveTab();
 		},
 
 		/**
@@ -114,15 +134,7 @@ define([
 		 */
 		closeActual : function()
 		{
-			if(!(this._elmA instanceof TabGroup) || this._elmA.focused)
-			{
-				this._elmA.closeActual();
-			}
-
-			if(!(this._elmB instanceof TabGroup) || this._elmB.focused)
-			{
-				this._elmB.closeActual();
-			}
+			this.group.closeActual();
 		},
 
 		/**
@@ -133,8 +145,7 @@ define([
 		 */
 		selectTab : function(tab)
 		{
-			this._elmA.selectTab(tab);
-			this._elmB.selectTab(tab);
+			this.group.selectTab(tab);
 		},
 
 		/**
@@ -144,15 +155,7 @@ define([
 		 */
 		selectNextTab : function()
 		{
-			if(!(this._elmA instanceof TabGroup) || this._elmA.focused)
-			{
-				this._elmA.selectNextTab();
-			}
-
-			if(!(this._elmB instanceof TabGroup) || this._elmB.focused)
-			{
-				this._elmB.selectNextTab();
-			}
+			this.group.selectNextTab();
 		},
 
 		/**
@@ -162,35 +165,19 @@ define([
 		 */
 		selectPreviousTab : function()
 		{
-			if(!(this._elmA instanceof TabGroup) || this._elmA.focused)
-			{
-				this._elmA.selectPreviousTab();
-			}
-
-			if(!(this._elmB instanceof TabGroup) || this._elmB.focused)
-			{
-				this._elmB.selectPreviousTab();
-			}
+			this.group.selectPreviousTab();
 		},
 
 		/**
-		 * Add new option to tab group.
-		 *
-		 * Prefer the tab group stored on the elementA.
-		 *
+		 * Add new tab to the tab container.
+		 * 
 		 * @method addTab
 		 * @param {Constructor} TabConstructor Constructor if the TabElement to be added to the container.
 		 * @param {Boolean} closeable Indicates if the tab can be closed.
 		 */
 		addTab : function(TabConstructor, closeable)
 		{
-			var tab = this._elmA.addTab(TabConstructor, closeable);
-			if(tab === null)
-			{
-				tab = this._elmB.addTab(TabConstructor, closeable);
-			}
-
-			return tab;
+			return this.group.addTab(TabConstructor, closeable);
 		},
 
 		/**
@@ -202,14 +189,7 @@ define([
 		 */
 		getTab : function(type, object)
 		{
-			var tab = this._elmA.getTab(type, object);
-			
-			if(tab === null)
-			{
-				tab = this._elmB.getTab(type, object);
-			}
-
-			return tab;
+			return this.group.getTab(type, object);
 		},
 
 		/**
@@ -219,12 +199,10 @@ define([
 		 */
 		clear : function(forceAll)
 		{
-			this._elmA.clear(forceAll);
-			this._elmB.clear(forceAll);
+			this.group.clear();
 		}
+	});
 
-	 });
 
-
-	return tabs.splittable.TabDualContainer = TabDualContainer;
+	return tabs.splittable.TabContainer = TabContainer;
 });

@@ -1,6 +1,6 @@
 define([
 	"skylark-devices-points/mouse",
-	"skylark-widgets-base/Widget",
+	"skylark-widgets-base/widget",
 	"./tabs"
 ],function(
 	mouse,

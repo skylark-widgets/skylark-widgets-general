@@ -1,14 +1,14 @@
 define([
 	"skylark-domx-geom",
-	"skylark-widgets-base/dnd/DragBuffer",
+	"skylark-widgets-base/dnd/drag-buffer",
 
-	"skylark-widgets-base/panels/DualContainer",
+	"skylark-widgets-base/panels/dual-container",
 	"../tabs",
-	"../TabGroup",
-	"../TabElement",
-	"./TabContainer",
-	"./TabDualContainer",
-	"./TabButtonSplit"
+	"../tab-group",
+	"../tab-element",
+	"./tab-container",
+	"./tab-dual-container",
+	"./tab-button-split"
 ],function(
 	geom, 
 	DragBuffer,
